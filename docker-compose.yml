@@ -32,8 +32,19 @@ services:
     - ./science-gateway-job-manager-blue:/app
     depends_on:
     - middleware
+    - simulator
     networks:
     - db_nw
+  simulator:
+    build:
+      context: science-gateway-simulator-openfoam
+      dockerfile: Dockerfile
+    env_file:
+     - science-gateway-job-manager-blue/keys/simulator.env
+    ports:
+    - "10022:22"
+    volumes:
+    - ./science-gateway-simulator-openfoam:/app
 networks:
   db_nw:
     driver: bridge

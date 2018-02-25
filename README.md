@@ -35,10 +35,26 @@ This repository is for managing project-level issues. See separate repositories 
     docker-compose down
     ```
 
-1. Bring up the full system.
+1. Create job manager ssh keys:
     ```shell
+    (cd science-gateway-job-manager-blue && ./create_keys.sh)
+    ```
+
+1. Bring up the full system.
+    ```bash
     docker-compose up
     ```
+
+### Connecting to the simulator
+
+```bash
+ssh -o IdentitiesOnly=yes \
+    -o UserKnownHostsFile=/dev/null \
+    -o StrictHostKeyChecking=no \
+    -i science-gateway-job-manager-blue/keys/simulator_key \
+    -p 10022 \
+    testuser@localhost
+```
 
 ### Contributors
 
