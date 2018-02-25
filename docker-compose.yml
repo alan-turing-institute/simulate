@@ -1,0 +1,29 @@
+version: '3'
+services:
+  web:
+    build:
+      context: science-gateway-data-model
+      dockerfile: Dockerfile
+    ports:
+     - "5000:5000"
+    volumes:
+     - ./science-gateway-data-model:/app
+    depends_on:
+     - postgres
+    networks:
+     - db_nw
+  postgres:
+    image: "postgres:latest"
+    volumes:
+     - database:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=sg
+      - POSTGRES_PASSWORD=sg
+      - POSTGRES_DB=sg
+    networks:
+     - db_nw
+networks:
+  db_nw:
+    driver: bridge
+volumes:
+  database:
