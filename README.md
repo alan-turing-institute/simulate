@@ -59,3 +59,10 @@ ssh -o IdentitiesOnly=yes \
 ### Contributors
 
 This repository also manages project-level issues: see the [issues](https://github.com/alan-turing-institute/science-gateway/issues) page for current development status.
+
+To update to latest state:
+
+```
+git submodule update --recursive
+```
+
