@@ -1,10 +1,22 @@
 # Science Gateway
-A user-friendly web-based interface for creating and running jobs on HPC clusters.
+
+A user-friendly web-based interface for managing simulations on HPC and cloud resources.
+
+### Installation
+
+This repository can be used to deploy a containerised version of the project.
+
+```bash
+git clone --recursive https://github.com/alan-turing-institute/science-gateway
+```
 
 This repository is for managing project-level issues. See separate repositories below for code and component-level issues.
 
- - [science-gateway-inputs](https://github.com/alan-turing-institute/science-gateway-inputs): Front end web application
- - [science-gateway-users](https://github.com/alan-turing-institute/science-gateway-users): User management
- - [science-gateway-counter](https://github.com/alan-turing-institute/science-gateway-counter): Simulation counter for tracking usage
- - [science-gateway-middleware](https://github.com/alan-turing-institute/science-gateway-middleware): Middleware API endpoints exposing a common interface to multiple HPC cluster backends.
- - [science-gateway-cluster](https://github.com/alan-turing-institute/science-gateway-cluster): Code for deploying backend compute resources.
+ - [science-gateway-inputs](https://github.com/alan-turing-institute/science-gateway-inputs): A frontend web application.
+ - [science-gateway-data-model](https://github.com/alan-turing-institute/science-gateway-data-model): A middleware service between the frontend and multiple job managers.
+ - [science-gateway-job-manager-blue](https://github.com/alan-turing-institute/science-gateway-job-manager-blue): A service for deploying backend simulator resources.
+ - [science-gateway-simulator-openfoam](https://github.com/alan-turing-institute/science-gateway-simulator-openfoam): A backend simulator for OpenFOAM.
+
+### Contributors
+
+This repository also manages project-level issues: see the [issues](https://github.com/alan-turing-institute/science-gateway/issues) page for current development status.
