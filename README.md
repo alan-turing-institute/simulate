@@ -37,7 +37,7 @@ This repository is for managing project-level issues. See separate repositories 
 
 1. Create job manager ssh keys:
     ```shell
-    (cd gateway-job-manager-openfoam && ./create_keys.sh)
+    (cd gateway-job-manager-openfoam/keys && ./create_keys.sh)
     ```
 
 1. Bring up the full system.
