@@ -4,8 +4,8 @@ A user-friendly web-based interface for managing simulations on HPC and cloud re
 
 This repository is for managing project-level issues. See separate repositories below for code and component-level issues.
 
-- [gateway-inputs](https://github.com/alan-turing-institute/gateway-inputs): A frontend web application.
-- [gateway-data-model](https://github.com/alan-turing-institute/gateway-data-model): A middleware service between the frontend and multiple job managers.
+- [gateway-frontend](https://github.com/alan-turing-institute/gateway-frontend): A frontend web application.
+- [gateway-middleware](https://github.com/alan-turing-institute/gateway-middleware): A middleware service between the frontend and multiple job managers.
 - [gateway-job-manager-openfoam](https://github.com/alan-turing-institute/gateway-job-manager-openfoam): A service for deploying backend simulator resources.
 - [gateway-simulator-openfoam](https://github.com/alan-turing-institute/gateway-simulator-openfoam): A backend simulator for OpenFOAM.
 
@@ -19,7 +19,7 @@ This repository is for managing project-level issues. See separate repositories 
 
     ```bash
     git clone --recursive https://github.com/alan-turing-institute/gateway
-    cd science-gateway
+    cd gateway
     ```
 
 1. If this is the first time you are running the system:
@@ -37,7 +37,7 @@ This repository is for managing project-level issues. See separate repositories 
 
 1. Create job manager ssh keys:
     ```shell
-    (cd science-gateway-job-manager-openfoam && ./create_keys.sh)
+    (cd gateway-job-manager-openfoam && ./create_keys.sh)
     ```
 
 1. Bring up the full system.
@@ -51,7 +51,7 @@ This repository is for managing project-level issues. See separate repositories 
 ssh -o IdentitiesOnly=yes \
     -o UserKnownHostsFile=/dev/null \
     -o StrictHostKeyChecking=no \
-    -i science-gateway-job-manager-openfoam/keys/simulator_key \
+    -i gateway-job-manager-openfoam/keys/simulator_key \
     -p 10022 \
     testuser@localhost
 ```

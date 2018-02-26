@@ -2,12 +2,12 @@ version: '3'
 services:
   middleware:
     build:
-      context: science-gateway-data-model
+      context: gateway-middleware
       dockerfile: Dockerfile
     ports:
      - "5000:5000"
     volumes:
-     - ./science-gateway-data-model:/app
+     - ./gateway-middleware:/app
     depends_on:
      - postgres
     networks:
@@ -24,12 +24,12 @@ services:
      - db_nw
   job_mgr:
     build:
-      context: science-gateway-job-manager-blue
+      context: gateway-job-manager-openfoam
       dockerfile: Dockerfile
     ports:
     - "5001:5001"
     volumes:
-    - ./science-gateway-job-manager-blue:/app
+    - ./gateway-job-manager-openfoam:/app
     depends_on:
     - middleware
     - simulator
@@ -37,14 +37,14 @@ services:
     - db_nw
   simulator:
     build:
-      context: science-gateway-simulator-openfoam
+      context: gateway-simulator-openfoam
       dockerfile: Dockerfile
     env_file:
-     - science-gateway-job-manager-blue/keys/simulator.env
+     - gateway-job-manager-openfoam/keys/simulator.env
     ports:
     - "10022:22"
     volumes:
-    - ./science-gateway-simulator-openfoam:/app
+    - ./gateway-simulator-openfoam:/app
 networks:
   db_nw:
     driver: bridge
