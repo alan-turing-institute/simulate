@@ -6,7 +6,7 @@ This repository is for managing project-level issues. See separate repositories 
 
 - [gateway-inputs](https://github.com/alan-turing-institute/gateway-inputs): A frontend web application.
 - [gateway-data-model](https://github.com/alan-turing-institute/gateway-data-model): A middleware service between the frontend and multiple job managers.
-- [gateway-job-manager-blue](https://github.com/alan-turing-institute/gateway-job-manager-blue): A service for deploying backend simulator resources.
+- [gateway-job-manager-openfoam](https://github.com/alan-turing-institute/gateway-job-manager-openfoam): A service for deploying backend simulator resources.
 - [gateway-simulator-openfoam](https://github.com/alan-turing-institute/gateway-simulator-openfoam): A backend simulator for OpenFOAM.
 
 ### Installation
@@ -37,7 +37,7 @@ This repository is for managing project-level issues. See separate repositories 
 
 1. Create job manager ssh keys:
     ```shell
-    (cd science-gateway-job-manager-blue && ./create_keys.sh)
+    (cd science-gateway-job-manager-openfoam && ./create_keys.sh)
     ```
 
 1. Bring up the full system.
@@ -51,7 +51,7 @@ This repository is for managing project-level issues. See separate repositories 
 ssh -o IdentitiesOnly=yes \
     -o UserKnownHostsFile=/dev/null \
     -o StrictHostKeyChecking=no \
-    -i science-gateway-job-manager-blue/keys/simulator_key \
+    -i science-gateway-job-manager-openfoam/keys/simulator_key \
     -p 10022 \
     testuser@localhost
 ```

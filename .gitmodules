@@ -1,9 +1,0 @@
-[submodule "science-gateway-data-model"]
-	path = science-gateway-data-model
-	url = https://github.com/alan-turing-institute/science-gateway-data-model
-[submodule "science-gateway-job-manager-blue"]
-	path = science-gateway-job-manager-blue
-	url = https://github.com/alan-turing-institute/science-gateway-job-manager-blue
-[submodule "science-gateway-simulator-openfoam"]
-	path = science-gateway-simulator-openfoam
-	url = https://github.com/alan-turing-institute/science-gateway-simulator-openfoam
