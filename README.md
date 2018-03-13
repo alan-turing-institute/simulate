@@ -45,15 +45,21 @@ This repository is for managing project-level issues. See separate repositories 
     docker-compose up
     ```
 
-### Connecting to the simulator
+### Connecting to containers
+
+Note, you can always use `docker exec` based methods to connect to containers. We do however need to mock an ssh connection. 
+
+Connect from your computer (main host) to the simulator via ssh:
+
+```
+ssh -i gateway-job-manager-openfoam/keys/simulator_key testuser@0.0.0.0 -p 10022
+```
+
+Connect from the job manager to the simulator via ssh:
 
 ```bash
-ssh -o IdentitiesOnly=yes \
-    -o UserKnownHostsFile=/dev/null \
-    -o StrictHostKeyChecking=no \
-    -i gateway-job-manager-openfoam/keys/simulator_key \
-    -p 10022 \
-    testuser@localhost
+cd /app
+ssh -i keys/simulator_key testuser@gateway_simulator_1
 ```
 
 ### Contributors
