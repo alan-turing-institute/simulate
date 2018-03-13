@@ -22,14 +22,17 @@ services:
       - POSTGRES_DB=sg
     networks:
      - db_nw
-  job_mgr:
+  job-manager:
     build:
       context: gateway-job-manager-openfoam
       dockerfile: Dockerfile
     ports:
     - "5001:5001"
+    - "10023:22"
     volumes:
     - ./gateway-job-manager-openfoam:/app
+    environment:
+    - FLASK_CONFIGURATION=default
     depends_on:
     - middleware
     - simulator
@@ -43,8 +46,11 @@ services:
      - gateway-job-manager-openfoam/keys/simulator.env
     ports:
     - "10022:22"
+    privileged: true
     volumes:
     - ./gateway-simulator-openfoam:/app
+    networks:
+    - db_nw
 networks:
   db_nw:
     driver: bridge
