@@ -42,8 +42,11 @@ services:
     build:
       context: gateway-simulator-openfoam
       dockerfile: Dockerfile
+
+    # here we use the keys from the job-manager
     env_file:
      - gateway-job-manager-openfoam/keys/simulator.env
+
     ports:
     - "10022:22"
     privileged: true
