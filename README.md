@@ -52,7 +52,7 @@ Note, you can always use `docker exec` based methods to connect to containers. W
 Connect from your computer (main host) to the simulator via ssh:
 
 ```
-ssh -i gateway-job-manager-openfoam/keys/simulator_key testuser@0.0.0.0 -p 10022
+ssh -o StrictHostKeyChecking=no -i gateway-job-manager-openfoam/keys/simulator_key testuser@0.0.0.0 -p 10022
 ```
 
 Connect from the job manager to the simulator via ssh:
