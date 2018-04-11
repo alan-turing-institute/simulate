@@ -1,12 +1,6 @@
 [submodule "gateway-frontend"]
 	path = gateway-frontend
 	url = https://github.com/alan-turing-institute/gateway-frontend
-[submodule "gateway-job-manager-openfoam"]
-	path = gateway-job-manager-openfoam
-	url = https://github.com/alan-turing-institute/gateway-job-manager-openfoam
-[submodule "gateway-simulator-openfoam"]
-	path = gateway-simulator-openfoam
-	url = https://github.com/alan-turing-institute/gateway-simulator-openfoam
 [submodule "gateway-middleware"]
 	path = gateway-middleware
 	url = https://github.com/alan-turing-institute/gateway-middleware
