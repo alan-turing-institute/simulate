@@ -39,6 +39,7 @@ services:
     networks:
     - db_nw
   simulator:
+    container_name: simulator-openfoam
     build:
       context: gateway-openfoam/gateway-simulator-openfoam
       dockerfile: Dockerfile
@@ -54,6 +55,19 @@ services:
     - ./gateway-openfoam/gateway-simulator-openfoam:/app
     networks:
     - db_nw
+  frontend:
+    build:
+      context: gateway-frontend
+      dockerfile: Dockerfile
+    ports:
+    - "8080:8080"
+    depends_on:
+    - job-manager
+    - middleware
+    - simulator
+    networks:
+    - db_nw    
+
 networks:
   db_nw:
     driver: bridge
