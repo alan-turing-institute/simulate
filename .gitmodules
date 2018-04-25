@@ -6,4 +6,4 @@
 	url = https://github.com/alan-turing-institute/gateway-middleware
 [submodule "gateway-openfoam"]
 	path = gateway-openfoam
-	url = git@github.com:alan-turing-institute/gateway-openfoam.git
+	url = https://github.com:alan-turing-institute/gateway-openfoam.git
