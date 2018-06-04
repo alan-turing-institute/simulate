@@ -6,8 +6,9 @@ This repository is for managing project-level issues. See separate repositories 
 
 - [gateway-frontend](https://github.com/alan-turing-institute/gateway-frontend): A frontend web application.
 - [gateway-middleware](https://github.com/alan-turing-institute/gateway-middleware): A middleware service between the frontend and multiple job managers.
-- [gateway-job-manager-openfoam](https://github.com/alan-turing-institute/gateway-job-manager-openfoam): A service for deploying backend simulator resources.
-- [gateway-simulator-openfoam](https://github.com/alan-turing-institute/gateway-simulator-openfoam): A backend simulator for OpenFOAM.
+- [gateway-openfoam](https://github.com/alan-turing-institute/gateway-openfoam): A pairing of backend job manager and simulator, including integration tests.
+  - [gateway-job-manager-openfoam](https://github.com/alan-turing-institute/gateway-job-manager-openfoam): A service for deploying backend simulator resources.
+  - [gateway-simulator-openfoam](https://github.com/alan-turing-institute/gateway-simulator-openfoam): A backend simulator for OpenFOAM.
 
 ### Installation
 
