@@ -22,6 +22,31 @@ services:
       - POSTGRES_DB=sg
     networks:
      - db_nw
+
+  auth:
+    build:
+      context: gateway-auth
+      dockerfile: Dockerfile
+    ports:
+     - "6000:6000"
+    volumes:
+     - ./gateway-auth:/app
+    depends_on:
+     - postgres_auth
+    networks:
+     - db_nw
+
+  postgres_auth:
+    image: "postgres:latest"
+    volumes:
+     - database_auth:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=sg
+      - POSTGRES_PASSWORD=sg
+      - POSTGRES_DB=sg
+    networks:
+     - db_nw
+
   job-manager:
     build:
       context: gateway-openfoam/gateway-job-manager-openfoam
@@ -55,13 +80,10 @@ services:
     - ./gateway-openfoam/gateway-simulator-openfoam:/app
     networks:
     - db_nw
-  
   frontend:
     build:
       context: gateway-frontend
       dockerfile: Dockerfile
-    volumes:
-    - ./gateway-frontend:/app
     ports:
     - "8080:8080"
     depends_on:
@@ -69,10 +91,11 @@ services:
     - middleware
     - simulator
     networks:
-    - db_nw    
+    - db_nw
 
 networks:
   db_nw:
     driver: bridge
 volumes:
   database:
+  database_auth:
