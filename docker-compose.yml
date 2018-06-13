@@ -85,7 +85,7 @@ services:
       context: gateway-frontend
       dockerfile: Dockerfile
     volumes:
-    - ./gateway-frontend:/app
+    - ./gateway-frontend/src:/app/src
     ports:
     - "8080:8080"
     depends_on:
