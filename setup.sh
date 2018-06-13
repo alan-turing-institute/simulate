@@ -2,7 +2,9 @@
 
 echo "INFO: running postgres container"
 docker-compose run postgres &
+docker-compose run postgres_auth &
 
-echo "INFO: please wait, postgres container will shut down in 5 seconds"
-sleep 5
+
+echo "INFO: please wait, postgres and postgres_auth containers will shut down in 10 seconds"
+sleep 10
 docker-compose down
