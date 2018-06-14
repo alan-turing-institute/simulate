@@ -80,12 +80,11 @@ services:
     - ./gateway-openfoam/gateway-simulator-openfoam:/app
     networks:
     - db_nw
+
   frontend:
     build:
       context: gateway-frontend
       dockerfile: Dockerfile
-    volumes:
-    - ./gateway-frontend:/app
     ports:
     - "8080:8080"
     depends_on:
@@ -94,6 +93,9 @@ services:
     - simulator
     networks:
     - db_nw
+    volumes:
+    - './gateway-frontend/src:/app/src'
+    - '/app/node_modules'
 
 networks:
   db_nw:
