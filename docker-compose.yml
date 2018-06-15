@@ -28,7 +28,7 @@ services:
       context: gateway-auth
       dockerfile: Dockerfile
     ports:
-     - "6000:6000"
+     - "5050:5050"
     volumes:
      - ./gateway-auth:/app
     depends_on:
