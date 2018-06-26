@@ -9,4 +9,4 @@
 	url = https://github.com/alan-turing-institute/gateway-openfoam.git
 [submodule "gateway-auth"]
 	path = gateway-auth
-	url = git@github.com:alan-turing-institute/gateway-auth.git
+	url = https://github.com/alan-turing-institute/gateway-auth.git
