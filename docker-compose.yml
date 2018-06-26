@@ -58,11 +58,15 @@ services:
     - ./gateway-openfoam/gateway-job-manager-openfoam:/app
     environment:
     - FLASK_CONFIGURATION=default
+    - azure_account_name
+    - azure_account_key
     depends_on:
     - middleware
     - simulator
     networks:
     - db_nw
+
+
   simulator:
     container_name: simulator-openfoam
     build:
