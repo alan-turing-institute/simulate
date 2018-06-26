@@ -1,3 +1,6 @@
 # IDE components
 .ropeproject
 .vscode
+
+# sphinx
+_build/
