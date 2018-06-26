@@ -1,0 +1,21 @@
+language: python
+
+git:
+  depth: 99999
+
+sudo: required
+
+services:
+ - docker
+
+matrix:
+  include:
+   - python: 3.6
+
+before_install:
+ - git submodule update --init --recursive
+ - cp gateway-openfoam/gateway-job-manager-openfoam/config.py.example gateway-openfoam/gateway-job-manager-openfoam/config.py
+ - (cd gateway-openfoam/gateway-job-manager-openfoam/keys && ./create_keys.sh)
+ 
+install:
+ - docker-compose build

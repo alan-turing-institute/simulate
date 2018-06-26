@@ -6,9 +6,9 @@ This repository is for managing project-level issues. See separate repositories 
 
 - [gateway-frontend](https://github.com/alan-turing-institute/gateway-frontend): A frontend web application.
 - [gateway-middleware](https://github.com/alan-turing-institute/gateway-middleware): A middleware service between the frontend and multiple job managers.
-- [gateway-openfoam](https://github.com/alan-turing-institute/gateway-openfoam): A pairing of backend job manager and simulator, including integration tests.
-  - [gateway-job-manager-openfoam](https://github.com/alan-turing-institute/gateway-job-manager-openfoam): A service for deploying backend simulator resources.
-  - [gateway-simulator-openfoam](https://github.com/alan-turing-institute/gateway-simulator-openfoam): A backend simulator for OpenFOAM.
+- [gateway-auth](https://github.com/alan-turing-institute/gateway-auth): An authorisation service.
+- [gateway-job-manager-openfoam](https://github.com/alan-turing-institute/gateway-job-manager-openfoam): A service for deploying backend simulator resources.
+- [gateway-simulator-openfoam](https://github.com/alan-turing-institute/gateway-simulator-openfoam): A backend simulator for OpenFOAM.
 
 ### Installation
 
@@ -27,12 +27,12 @@ This repository is for managing project-level issues. See separate repositories 
 
     a. Run the Postgres server individually in order for it to set itself up:
 
-    ```
+    ```shell
     docker-compose run postgres
     ```
     b. Shutdown the Postgres server:
 
-    ```
+    ```shell
     docker-compose down
     ```
 
@@ -41,14 +41,22 @@ This repository is for managing project-level issues. See separate repositories 
     (cd gateway-job-manager-openfoam/keys && ./create_keys.sh)
     ```
 
+1.    Configure application components:
+
+    ```shell
+    (cd gateway-openfoam/gateway-job-manager-openfoam && cp config.py.example config.py)
+    (cd gateway-auth && cp config.py.example config.py)
+    ```
+
 1. Bring up the full system.
     ```bash
+    docker-compose build  # optional
     docker-compose up
     ```
 
 ### Connecting to containers
 
-Note, you can always use `docker exec` based methods to connect to containers. We do however need to mock an ssh connection. 
+Note, you can always use `docker exec` based methods to connect to containers. We do however need to mock an ssh connection.
 
 Connect from your computer (main host) to the simulator via ssh:
 
@@ -72,4 +80,3 @@ To update to latest state:
 ```
 git submodule update --recursive
 ```
-
