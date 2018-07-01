@@ -1,5 +1,6 @@
 version: '3'
 services:
+
   middleware:
     build:
       context: gateway-middleware
@@ -30,11 +31,11 @@ services:
     ports:
      - "5050:5050"
     volumes:
-     - ./gateway-auth:/app
+      - ./gateway-auth:/app
     depends_on:
-     - postgres_auth
+      - postgres_auth
     networks:
-     - db_nw
+      - db_nw
 
   postgres_auth:
     image: "postgres:latest"
@@ -52,14 +53,14 @@ services:
       context: gateway-openfoam/gateway-job-manager-openfoam
       dockerfile: Dockerfile
     ports:
-    - "5001:5001"
-    - "10023:22"
+      - "5001:5001"
+      - "10023:22"
     volumes:
-    - ./gateway-openfoam/gateway-job-manager-openfoam:/app
+      - ./gateway-openfoam/gateway-job-manager-openfoam:/app
     environment:
-    - FLASK_CONFIGURATION=default
-    - azure_account_name
-    - azure_account_key
+      - FLASK_CONFIGURATION=development
+      - STORAGE_ACCOUNT_NAME
+      - STORAGE_ACCOUNT_KEY
     depends_on:
     - middleware
     - simulator
