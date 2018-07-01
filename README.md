@@ -45,7 +45,7 @@ This repository is for managing project-level issues. See separate repositories 
 
     ```shell
     (cd gateway-openfoam/gateway-job-manager-openfoam && cp config.py.example config.py)
-    (cd gateway-auth && cp config.py.example config.py)
+    (cd gateway-auth && cp config.example.json config.development.json)
     ```
 
 1. Bring up the full system.
