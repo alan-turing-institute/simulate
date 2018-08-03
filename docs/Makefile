@@ -14,7 +14,7 @@ help:
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 watch:
-	$(SPHINXWATCH) "$(BUILDDIR)" "$(BUILDDIR)/html"
+	$(SPHINXWATCH) "$(SOURCEDIR)" "$(BUILDDIR)/html"
 
 .PHONY: help Makefile watch
 
