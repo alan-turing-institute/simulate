@@ -7,9 +7,15 @@ compute infrastructure, and cloud storage infrastructure.
 
 
 The following API endpoints are provided, which are called by the
-middleware::
+middleware:
 
-	POST /job/<job_id>/start
+``POST``
+
+::
+
+	/job/<job_id>/start
+
+::
 
 	payload = {"fields_to_patch": [
 			{
@@ -27,6 +33,8 @@ middleware::
 		]
 	}
 
+::
+
 	return = {"data": <message>,
 	          "status": <status_code>
 	}
@@ -35,9 +43,13 @@ Start a new job with id *<job_id>*.
 
 -----
 
+``GET``
+
 ::
 
-        GET /job/<job_id>/output
+        /job/<job_id>/output
+
+::
 
 	return = [
 	    {"job_id": <job_id>,
@@ -76,7 +88,7 @@ where the job_status must be one of "QUEUED", "RUNNING", "FINALIZING",
 This API call is made as soon as the job manager is aware that the job has
 successfully completed, in order to notify the middleware that the outputs
 are available.  If some sort of temporary access token is needed to access the
-data, it will generally NOT be appended to the destination_path URL here -
+data, it will generally not be appended to the destination_path URL here -
 instead, the middleware will make a GET request to the ``output`` endpoint of
 the job-manager, at which point the job-manager will obtain the token.
 
@@ -95,14 +107,24 @@ is via ssh.
 
 The following API endpoint on the job manager is called by the backend:
 
+``PATCH``
+
 ::
 
-     PATCH /job/<job_id>/status
+     /job/<job_id>/status
+
+::
+
      payload = {"status": <job_status>}
+
+::
+
      return = {"status": <status_code>,
                "message": <message>}
-         OR  (if job_status is "FINALIZING")
-	       {"status": <job_status>,
+
+OR  (if job_status is "FINALIZING")::
+
+     return = {"status": <job_status>,
                 "data": {"token": <SAS token>,
 	                 "container": <Azure container>,
 			 "account": <Azure account name>,
@@ -121,14 +143,11 @@ Starting a job
 
 When the job start endpoint is hit, the job-manager performs the following
 steps:
-* Retrieve the scripts from the specified location (on Azure blob storage
-in the currently implemented demo).
-* Patch the "fields_to_patch" parameters in the scripts with the specified
-values, using **Mako**.
-* Copy the scripts to the backend over ssh.
-* For scripts with specified "actions", execute those actions on the backend.
-The primary example for this is the "RUN" action, which will trigger the
-job-manager to run that script on the backend, in order to launch the job.
+
+- Retrieve the scripts from the specified location (on Azure blob storage in the currently implemented demo).
+- Patch the "fields_to_patch" parameters in the scripts with the specified values, using **Mako**.
+- Copy the scripts to the backend over ssh.
+- For scripts with specified "actions", execute those actions on the backend.  The primary example for this is the "RUN" action, which will trigger the job-manager to run that script on the backend, in order to launch the job.
 
 
 Finishing a job
@@ -136,12 +155,10 @@ Finishing a job
 
 When the backend hits the job status endpoint with a status of "FINALIZING",
 the job-manager will call the ``prepare_output_storage`` method which will:
-* Use the Azure credentials stored in ``config.json`` to generate a
-*Shared Access Signature* (SAS) token, with "write" permissions, valid
-for one hour.
-* Create a container on Azure blob storage, with the name specified in ``config.json``.
-* Define the name of the *blob* that will be uploaded to Azure.  The blob
-name is constructed from a base-name defined in ``config.py`` and the job_id.
+
+- Use the Azure credentials stored in ``config.json`` to generate a *Shared Access Signature* (SAS) token, with "write" permissions, valid for one hour.
+- Create a container on Azure blob storage, with the name specified in ``config.json``.
+- Define the name of the *blob* that will be uploaded to Azure.  The blob name is constructed from a base-name defined in ``config.py`` and the job_id.
 
 The Azure container name, blob name, and SAS token are returned to the backend,
 as described in the API endpoint description above.
