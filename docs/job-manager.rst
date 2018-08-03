@@ -9,29 +9,29 @@ compute infrastructure, and cloud storage infrastructure.
 The following API endpoints are provided, which are called by the
 middleware::
 
-	POST /job/<job_id>/start
+    POST /job/<job_id>/start
 
-	payload = {"fields_to_patch": [
-			{
-			"name" : <field_name>,
-			"value": <val>
-			},
-			...
-		],
-		"scripts" : [
-		        {
-			"name" : <script_name>,
-			"location" : <script_location>
-			},
-			...
-		]
-	}
+    payload = {"fields_to_patch": [
+            {
+            "name" : <field_name>,
+            "value": <val>
+            },
+            ...
+        ],
+        "scripts" : [
+                {
+            "name" : <script_name>,
+            "location" : <script_location>
+            },
+            ...
+        ]
+    }
 
-	return = {"data": <message>,
-	          "status": <status_code>
-	}
+    return = {"data": <message>,
+              "status": <status_code>
+    }
 
-Start a new job with id *<job_id>*.
+Start a new job with id ``<job_id>``.
 
 -----
 
@@ -39,13 +39,13 @@ Start a new job with id *<job_id>*.
 
         GET /job/<job_id>/output
 
-	return = [
-	    {"job_id": <job_id>,
-	     "output_type": <file_extension>,
-	     "destination_path": <URL>
-	    },
-	    ...
-	]
+    return = [
+        {"job_id": <job_id>,
+         "output_type": <file_extension>,
+         "destination_path": <URL>
+        },
+        ...
+    ]
 
 When a job is finished, a call to this endpoint will yield the URLs needed
 to access the job outputs.  In many cases, these will include temporary
@@ -61,8 +61,8 @@ occurences, via the following API calls:
       PUT  request to <middleware_url>/job/<job_id>/status
       payload = {"status": <job_status>}
 
-where the job_status must be one of "QUEUED", "RUNNING", "FINALIZING",
-"COMPLETED" or "FAILED".
+where the ``job_status`` must be one of ``"QUEUED"``, ``"RUNNING"``, ``"FINALIZING"``,
+``"COMPLETED"`` or ``"FAILED"``.
 
 
 ::
@@ -70,8 +70,8 @@ where the job_status must be one of "QUEUED", "RUNNING", "FINALIZING",
       POST request to <middleware_url>/job/<job_id>/output
       payload = {"job_id": <job_id>,
                  "output_type": <output_type>,
-		 "destination_path": <URL>
-		 }
+         "destination_path": <URL>
+         }
 
 This API call is made as soon as the job manager is aware that the job has
 successfully completed, in order to notify the middleware that the outputs
@@ -81,16 +81,16 @@ instead, the middleware will make a GET request to the ``output`` endpoint of
 the job-manager, at which point the job-manager will obtain the token.
 
 
-Openfoam job-manager
-====================
+OpenFOAM Job Manager
+--------------------
 
-At present, the only fully-implemented job-manager is for the **Openfoam**
+At present, the only fully-implemented job-manager is for the **OpenFOAM**
 simulator, running on a machine that can be *ssh*-ed to, and storing the
 output on Azure blob storage.
 
 The service is written in Python 3, and uses the *Flask* framework.  Calls
 to the middleware API are made using the *requests* package.  Communication
-with the machine (or Docker container) running the **Openfoam** simulator
+with the machine (or Docker container) running the **OpenFOAM** simulator
 is via ssh.
 
 The following API endpoint on the job manager is called by the backend:
@@ -102,13 +102,13 @@ The following API endpoint on the job manager is called by the backend:
      return = {"status": <status_code>,
                "message": <message>}
          OR  (if job_status is "FINALIZING")
-	       {"status": <job_status>,
+           {"status": <job_status>,
                 "data": {"token": <SAS token>,
-	                 "container": <Azure container>,
-			 "account": <Azure account name>,
-			 "blob": <Azure blob name>
-			 }
-	       }
+                     "container": <Azure container>,
+             "account": <Azure account name>,
+             "blob": <Azure blob name>
+             }
+           }
 
 
 The backend is able to update the status of a job by calling this endpoint,
@@ -121,12 +121,15 @@ Starting a job
 
 When the job start endpoint is hit, the job-manager performs the following
 steps:
-* Retrieve the scripts from the specified location (on Azure blob storage
-in the currently implemented demo).
-* Patch the "fields_to_patch" parameters in the scripts with the specified
-values, using **Mako**.
+
+* Retrieve the scripts from the specified location (on Azure blob storage in the currently implemented demo).
+
+* Patch the "fields_to_patch" parameters in the scripts with the specified values, using `Mako <http://www.makotemplates.org/>`_.
+
 * Copy the scripts to the backend over ssh.
+
 * For scripts with specified "actions", execute those actions on the backend.
+
 The primary example for this is the "RUN" action, which will trigger the
 job-manager to run that script on the backend, in order to launch the job.
 
@@ -136,12 +139,14 @@ Finishing a job
 
 When the backend hits the job status endpoint with a status of "FINALIZING",
 the job-manager will call the ``prepare_output_storage`` method which will:
-* Use the Azure credentials stored in ``config.json`` to generate a
-*Shared Access Signature* (SAS) token, with "write" permissions, valid
-for one hour.
+
+* Use the Azure credentials stored in ``config.json`` to generate a *Shared Access Signature* (SAS) token, with "write" permissions, valid for one hour.
+
 * Create a container on Azure blob storage, with the name specified in ``config.json``.
-* Define the name of the *blob* that will be uploaded to Azure.  The blob
-name is constructed from a base-name defined in ``config.py`` and the job_id.
+
+* Define the name of the *blob* that will be uploaded to Azure.  
+
+The blob name is constructed from a base-name defined in ``config.py`` and the job_id.
 
 The Azure container name, blob name, and SAS token are returned to the backend,
 as described in the API endpoint description above.

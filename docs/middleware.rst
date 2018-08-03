@@ -1,8 +1,8 @@
 Middleware
-===========
+==========
 
 The *middleware* acts as the bridge between the multi-purpose section
-of the SiMulate system and user defined execution environments.
+of the Simulate system and user defined execution environments.
 It is responsible for managing jobs and cases, as well as all communication
 with the *job manager* through a well defined API.
 
@@ -14,7 +14,7 @@ for, and passes directly to the *job manager*. This aspect of the design
 is intensional and serves to insulate the front end from any need to be
 aware of user defined components.
 
-The *middleware* communicates with every component in the defined SiMulate
+The *middleware* communicates with every component in the defined Simulate
 system:
 
 Front-end
@@ -39,7 +39,7 @@ Job Manager:
 
 
 Requirements
---------------
+^^^^^^^^^^^^
 
 The *middleware* can be run standalone as long as:
 
@@ -49,10 +49,10 @@ The *middleware* can be run standalone as long as:
 #. For everything else you need a *job manager*
 
 Starting
----------
+--------
 
 Set up
-********
+******
 
 In order to run the *middleware* your system settings must be
 correctly configured in ``config.<mode>.json``.
@@ -71,14 +71,14 @@ An example configuration is:
     }
 
 Docker
-********
+******
 
 The *middleware* can be run through docker with the following command::
 
     docker-compose up
 
 Locally
-*********
+*******
 
 In order to run the *middleware* locally you must have:
 
