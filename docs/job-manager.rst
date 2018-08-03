@@ -93,8 +93,27 @@ to the middleware API are made using the *requests* package.  Communication
 with the machine (or Docker container) running the **Openfoam** simulator
 is via ssh.
 
-The following API endpoints on the job manager are called by the backend:
+The following API endpoint on the job manager is called by the backend:
 
+::
+
+     PATCH /job/<job_id>/status
+     payload = {"status": <job_status>}
+     return = {"status": <status_code>,
+               "message": <message>}
+         OR  (if job_status is "FINALIZING")
+	       {"status": <job_status>,
+                "data": {"token": <SAS token>,
+	                 "container": <Azure container>,
+			 "account": <Azure account name>,
+			 "blob": <Azure blob name>
+			 }
+	       }
+
+
+The backend is able to update the status of a job by calling this endpoint,
+which in turn triggers the job-manager to call the job status endpoint of
+the middleware.
 
 
 Starting a job
@@ -102,20 +121,42 @@ Starting a job
 
 When the job start endpoint is hit, the job-manager performs the following
 steps:
- * Retrieve the scripts from the specified location (on Azure blob storage
-   in the currently implemented demo).
- * Patch the "fields_to_patch" parameters in the scripts with the specified
-   values, using **Mako**.
- * Copy the scripts to the backend over ssh.
- * For scripts with specified "actions", execute those actions on the backend.
-   The primary example for this is the "RUN" action, which will trigger the
-   job-manager to run that script on the backend, in order to launch the job.
+* Retrieve the scripts from the specified location (on Azure blob storage
+in the currently implemented demo).
+* Patch the "fields_to_patch" parameters in the scripts with the specified
+values, using **Mako**.
+* Copy the scripts to the backend over ssh.
+* For scripts with specified "actions", execute those actions on the backend.
+The primary example for this is the "RUN" action, which will trigger the
+job-manager to run that script on the backend, in order to launch the job.
 
 
+Finishing a job
+---------------
+
+When the backend hits the job status endpoint with a status of "FINALIZING",
+the job-manager will call the ``prepare_output_storage`` method which will:
+* Use the Azure credentials stored in ``config.json`` to generate a
+*Shared Access Signature* (SAS) token, with "write" permissions, valid
+for one hour.
+* Create a container on Azure blob storage, with the name specified in ``config.json``.
+* Define the name of the *blob* that will be uploaded to Azure.  The blob
+name is constructed from a base-name defined in ``config.py`` and the job_id.
+
+The Azure container name, blob name, and SAS token are returned to the backend,
+as described in the API endpoint description above.
+
+
+When the backend sends a status of "COMPLETED", the job-manager calls
+the ``get_outputs`` function, which finds the URL of the blobs on Azure
+blob storage.  It then calls the middleware's ``output`` API endpoint with
+this information, as detailed above.  Note that there is no SAS token appended
+to the output URLs at this point.
 
 Retrieving output
 -----------------
 
-When the job output endpoint is hit, the job-manager will use the Azure
-credentials stored in ``config.json`` to generate a
-*Shared Access Signature* (SAS) token.
+When the job output endpoint is hit, the job-manager will generate a SAS token
+with "read" access valid for one hour, and append this to the output blob's
+URL.  The file-type and full URL are then returned to the middleware, as
+detailed in the API endpoint description above.
