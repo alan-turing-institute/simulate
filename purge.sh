@@ -1,7 +1,7 @@
 #!/bin/bash
 
-echo "INFO: removing gateway_database"
-docker volume rm gateway_database
+echo "INFO: removing simulate_database"
+docker volume rm simulate_database
 
-echo "INFO: removing gateway_database_auth"
-docker volume rm gateway_database_auth
+echo "INFO: removing simulate_database_auth"
+docker volume rm simulate_database_auth
