@@ -18,7 +18,7 @@ before_install:
   - (cd gateway-openfoam/gateway-job-manager-openfoam/keys && ./create_keys.sh)
 
 install:
-  - docker-compose build manager
+  - docker-compose build middleware
 
 script: 
   - echo "success"
