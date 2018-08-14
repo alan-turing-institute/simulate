@@ -3,12 +3,12 @@ services:
 
   middleware:
     build:
-      context: gateway-middleware
+      context: middleware
       dockerfile: Dockerfile
     ports:
      - "5000:5000"
     volumes:
-     - ./gateway-middleware:/app
+     - ./middleware:/app
     depends_on:
      - postgres
     networks:
@@ -26,12 +26,12 @@ services:
 
   auth:
     build:
-      context: gateway-auth
+      context: auth
       dockerfile: Dockerfile
     ports:
      - "5050:5050"
     volumes:
-      - ./gateway-auth:/app
+      - ./auth:/app
     depends_on:
       - postgres_auth
     networks:
@@ -48,15 +48,15 @@ services:
     networks:
      - db_nw
 
-  job-manager:
+  manager:
     build:
-      context: gateway-openfoam/gateway-job-manager-openfoam
+      context: openfoam/manager
       dockerfile: Dockerfile
     ports:
       - "5001:5001"
       - "10023:22"
     volumes:
-      - ./gateway-openfoam/gateway-job-manager-openfoam:/app
+      - ./openfoam/manager:/app
     environment:
       - FLASK_CONFIGURATION=development
       - STORAGE_ACCOUNT_NAME
@@ -69,37 +69,37 @@ services:
 
 
   simulator:
-    container_name: simulator-openfoam
+    container_name: simulator
     build:
-      context: gateway-openfoam/gateway-simulator-openfoam
+      context: openfoam/simulator
       dockerfile: Dockerfile
 
-    # here we use the keys from the job-manager
+    # here we use the keys from the manager
     env_file:
-     - gateway-openfoam/gateway-job-manager-openfoam/keys/simulator.env
+     - openfoam/manager/keys/simulator.env
 
     ports:
     - "10022:22"
     privileged: true
     volumes:
-    - ./gateway-openfoam/gateway-simulator-openfoam:/app
+    - ./openfoam/simulator:/app
     networks:
     - db_nw
 
   frontend:
     build:
-      context: gateway-frontend
+      context: frontend
       dockerfile: Dockerfile
     ports:
     - "8080:8080"
     depends_on:
-    - job-manager
+    - manager
     - middleware
     - simulator
     networks:
     - db_nw
     volumes:
-    - './gateway-frontend/src:/app/src'
+    - './frontend/src:/app/src'
     - '/app/node_modules'
 
 networks:

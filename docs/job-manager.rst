@@ -90,13 +90,13 @@ successfully completed, in order to notify the middleware that the outputs
 are available.  If some sort of temporary access token is needed to access the
 data, it will generally not be appended to the destination_path URL here -
 instead, the middleware will make a GET request to the ``output`` endpoint of
-the job-manager, at which point the job-manager will obtain the token.
+the *manager*, at which point the *manager* will obtain the token.
 
 
 OpenFOAM Job Manager
 --------------------
 
-At present, the only fully-implemented job-manager is for the **OpenFOAM**
+At present, the only fully-implemented *manager* is for the **OpenFOAM**
 simulator, running on a machine that can be *ssh*-ed to, and storing the
 output on Azure blob storage.
 
@@ -134,27 +134,27 @@ OR  (if job_status is "FINALIZING")::
 
 
 The backend is able to update the status of a job by calling this endpoint,
-which in turn triggers the job-manager to call the job status endpoint of
+which in turn triggers the *manager* to call the job status endpoint of
 the middleware.
 
 
 Starting a job
 --------------
 
-When the job start endpoint is hit, the job-manager performs the following
+When the job start endpoint is hit, the *manager* performs the following
 steps:
 
 - Retrieve the scripts from the specified location (on Azure blob storage in the currently implemented demo).
 - Patch the "fields_to_patch" parameters in the scripts with the specified values, using **Mako**.
 - Copy the scripts to the backend over ssh.
-- For scripts with specified "actions", execute those actions on the backend.  The primary example for this is the "RUN" action, which will trigger the job-manager to run that script on the backend, in order to launch the job.
+- For scripts with specified "actions", execute those actions on the backend.  The primary example for this is the "RUN" action, which will trigger the *manager* to run that script on the backend, in order to launch the job.
 
 
 Finishing a job
 ---------------
 
 When the backend hits the job status endpoint with a status of "FINALIZING",
-the job-manager will call the ``prepare_output_storage`` method which will:
+the *manager* will call the ``prepare_output_storage`` method which will:
 
 - Use the Azure credentials stored in ``config.json`` to generate a *Shared Access Signature* (SAS) token, with "write" permissions, valid for one hour.
 - Create a container on Azure blob storage, with the name specified in ``config.json``.
@@ -164,7 +164,7 @@ The Azure container name, blob name, and SAS token are returned to the backend,
 as described in the API endpoint description above.
 
 
-When the backend sends a status of "COMPLETED", the job-manager calls
+When the backend sends a status of "COMPLETED", the *manager* calls
 the ``get_outputs`` function, which finds the URL of the blobs on Azure
 blob storage.  It then calls the middleware's ``output`` API endpoint with
 this information, as detailed above.  Note that there is no SAS token appended
@@ -173,7 +173,7 @@ to the output URLs at this point.
 Retrieving output
 -----------------
 
-When the job output endpoint is hit, the job-manager will generate a SAS token
+When the job output endpoint is hit, the *manager* will generate a SAS token
 with "read" access valid for one hour, and append this to the output blob's
 URL.  The file-type and full URL are then returned to the middleware, as
 detailed in the API endpoint description above.

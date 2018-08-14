@@ -15,7 +15,7 @@ Simulate consists of several components, which interact to provide different set
    :maxdepth: 2
 
    middleware
-   job-manager
+   manager
 
 
 API Reference

@@ -1,12 +1,12 @@
-[submodule "gateway-frontend"]
-	path = gateway-frontend
+[submodule "frontend"]
+	path = frontend
 	url = https://github.com/alan-turing-institute/gateway-frontend
-[submodule "gateway-middleware"]
-	path = gateway-middleware
+[submodule "middleware"]
+	path = middleware
 	url = https://github.com/alan-turing-institute/gateway-middleware
-[submodule "gateway-openfoam"]
-	path = gateway-openfoam
+[submodule "openfoam"]
+	path = openfoam
 	url = https://github.com/alan-turing-institute/gateway-openfoam.git
-[submodule "gateway-auth"]
-	path = gateway-auth
+[submodule "auth"]
+	path = auth
 	url = https://github.com/alan-turing-institute/gateway-auth.git

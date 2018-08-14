@@ -1,4 +1,4 @@
 #!/bin/bash
 
-echo "INFO: starting gateway"
+echo "INFO: starting simulate"
 docker-compose up
