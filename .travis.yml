@@ -13,12 +13,12 @@ matrix:
     - python: 3.6
 
 before_install:
-  - git submodule update --init --recursive
-  - cp gateway-openfoam/gateway-job-manager-openfoam/config.example.json gateway-openfoam/gateway-job-manager-openfoam/config.development.json
-  - (cd gateway-openfoam/gateway-job-manager-openfoam/keys && ./create_keys.sh)
+        #  - git submodule update --init --recursive
+        #  - cp gateway-openfoam/gateway-job-manager-openfoam/config.example.json gateway-openfoam/gateway-job-manager-openfoam/config.development.json
+        #  - (cd gateway-openfoam/gateway-job-manager-openfoam/keys && ./create_keys.sh)
 
 install:
-  - docker-compose build
+        #  - docker-compose build
 
 script: 
   - echo "success"
