@@ -69,14 +69,14 @@ services:
 
 
   simulator:
-    container_name: simulator
+    # container_name: simulator
     build:
       context: openfoam/simulator
       dockerfile: Dockerfile
 
     # here we use the keys from the manager
     env_file:
-     - openfoam/manager/keys/simulator.env
+    - openfoam/manager/keys/simulator.env
 
     ports:
     - "10022:22"
