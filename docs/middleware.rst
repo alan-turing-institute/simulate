@@ -65,7 +65,7 @@ An example configuration is:
 
     {
         "SQLALCHEMY_DATABASE_URI": "postgres://sg:sg@postgres/sg",
-        "JOB_MANAGER_URL": "http://job-manager:5001/job",
+        "JOB_MANAGER_URL": "http://manager:5001/job",
         "AUTHENTICATION_URL": "http://auth:5050/auth/status",
         "AUTHENTICATE_ROUTES": true
     }

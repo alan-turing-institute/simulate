@@ -21,15 +21,15 @@ Setting up Simulate
 
     .. code-block:: shell
 
-        cd gateway-auth
-        cp config.example.json config.development.json
+        cd auth
+        cp config.py.example config.py
         cd ..
 
 #. Create the *job manager* SSH keys and configuration file:
 
     .. code-block:: shell
 
-        cd gateway-OpenFOAM/gateway-job-manager-OpenFOAM
+        cd openfoam/manager
         cp config.example.json config.development.json
         cd keys
         ./create_keys.sh
@@ -56,7 +56,7 @@ Setting up Simulate
 Accessing Simulate
 ------------------
 
-The *frontend* will now be available at ``http://localhost:8080``. You can now navigate to this URL in a web browser.
+The *front end* will now be available at ``http://localhost:8080``. You can now navigate to this URL in a web browser.
 
 
 .. [#] ``docker-compose`` will build each docker image. This process can take several minutes.
