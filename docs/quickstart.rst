@@ -14,7 +14,7 @@ Setting up Simulate
 
     .. code-block:: shell
 
-        git clone --recursive git@github.com:alan-turing-institute/simulate.git
+        git clone --recursive https://github.com/alan-turing-institute/simulate.git
         cd simulate
 
 #. Create the *authoriser* configuration file:
