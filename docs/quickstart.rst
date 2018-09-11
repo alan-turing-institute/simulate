@@ -17,15 +17,23 @@ Setting up Simulate
         git clone --recursive https://github.com/alan-turing-institute/simulate.git
         cd simulate
 
-#. Create the *authoriser* configuration file:
+#. Create the *auth* configuration file:
 
     .. code-block:: shell
 
         cd auth
-        cp config.py.example config.py
+        cp config.example.json config.development.json
         cd ..
 
-#. Create the *job manager* SSH keys and configuration file:
+#. Create the *middleware* configuration file:
+
+    .. code-block:: shell
+
+        cd middleware
+        cp config.example.json config.development.json
+        cd ..
+
+#. Create the *manager* SSH keys and configuration file:
 
     .. code-block:: shell
 
@@ -35,13 +43,21 @@ Setting up Simulate
         ./create_keys.sh
         cd ../../..
 
+#. Add the *storage* configuration using environment variables: [#]_
+
+    .. code-block:: shell
+
+        export STORAGE_ACCOUNT_NAME=simulate
+        export STORAGE_ACCOUNT_KEY=<key>
+    
 #. Bring the set of microservices up: [#]_
 
     .. code-block:: shell
 
-        docker-compose up
+        docker-compose build
+        docker-compose up -d
 
-#. Create a test user [#]_ on the *authoriser*:
+#. Create a test user [#]_ on *auth*:
 
     .. code-block:: shell
 
@@ -58,7 +74,11 @@ Accessing Simulate
 
 The *front end* will now be available at ``http://localhost:8080``. You can now navigate to this URL in a web browser.
 
-
-.. [#] ``docker-compose`` will build each docker image. This process can take several minutes.
 .. [#] Simulate uses Git submodules, hence the ``--recursive`` option must be included in the ``clone`` command.
+.. [#] Currently, we support MS Azure Storage Accounts. Hence, ``<key>`` is a secret key string obtainable through Storage Account "Access Keys" at `<portal.azure.com>`_.
+.. [#] Docker images can take several minutes to build if this is the first time you are building them.
 .. [#] The test user has the credentials username: ``turing``, password: ``turing``
+
+
+
+

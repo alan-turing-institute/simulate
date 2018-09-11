@@ -27,7 +27,7 @@ API Reference
    :maxdepth: 2
 
 
-Conribution Notes
+Contribution Notes
 -----------------
 
 :TODO: Information for contributors is kept here.
