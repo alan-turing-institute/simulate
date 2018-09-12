@@ -1,4 +1,4 @@
-# Gateway
+# Simulate
 
 A user-friendly web-based interface for managing simulations on HPC and cloud resources.
 
@@ -12,64 +12,7 @@ This repository is for managing project-level issues. See separate repositories 
 
 ### Installation
 
-1. Ensure that you have installed [Docker](https://docs.docker.com/docker-for-mac/install/).
-
-1. Start the Docker daemon if it is not already running.
-
-1. Clone this repository:
-
-    ```bash
-    git clone --recursive https://github.com/alan-turing-institute/simulate
-    cd simulate
-    ```
-
-1. If this is the first time you are running the system:
-
-    a. Run the Postgres server individually in order for it to set itself up:
-
-    ```shell
-    docker-compose run postgres
-    ```
-    b. Shutdown the Postgres server:
-
-    ```shell
-    docker-compose down
-    ```
-
-1. Create job manager ssh keys:
-    ```shell
-    (cd manager/keys && ./create_keys.sh)
-    ```
-
-1.    Configure application components:
-
-    ```shell
-    (cd openfoam/manager && cp config.py.example config.py)
-    (cd auth && cp config.example.json config.development.json)
-    ```
-
-1. Bring up the full system.
-    ```bash
-    docker-compose build  # optional
-    docker-compose up
-    ```
-
-### Connecting to containers
-
-Note, you can always use `docker exec` based methods to connect to containers. We do however need to mock an ssh connection.
-
-Connect from your computer (main host) to the simulator via ssh:
-
-```
-ssh -o StrictHostKeyChecking=no -i openfoam/manager/keys/simulator_key testuser@0.0.0.0 -p 10022
-```
-
-Connect from the job manager to the simulator via ssh:
-
-```bash
-cd /app
-ssh -i keys/simulator_key testuser@simulate_simulator_1
-```
+Refer to http://simulate.readthedocs.io.
 
 ### Contributors
 
