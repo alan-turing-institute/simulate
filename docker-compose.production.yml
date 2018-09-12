@@ -5,9 +5,9 @@ services:
   frontend:
     build:
       context: frontend
-      dockerfile: Dockerfile.development
+      dockerfile: Dockerfile
     ports:
-    - "8080:8080"
+    - "80:80"
     depends_on:
     - manager
     - middleware
@@ -42,20 +42,31 @@ services:
     networks:
      - share
 
-  # middleware components
+ # middleware components
+  middleware_nginx:
+    build: ./middleware/nginx
+    restart: always
+    ports: 
+    - 5000:80
+    depends_on:
+    - middleware
+    networks:
+    - share
   middleware:
     build:
       context: middleware
       dockerfile: Dockerfile
+    restart: always
     ports:
-     - "5000:5000"
+    - "5001:5001"
     volumes:
-     - ./middleware:/app
+    - ./middleware:/app
     depends_on:
-     - middleware_database
+    - middleware_database
     networks:
-     - share
-     command: gunicorn -w 1 -b :5000 app:app --reload
+    - share
+    # add gunicorn to handle internal flask threading
+    command: gunicorn -w 1 -b :5001 app:app
   middleware_database:
     image: "postgres:latest"
     volumes:
@@ -86,7 +97,6 @@ services:
     - simulator
     networks:
     - share
-    command: gunicorn -w 1 -b :5010 app:app --reload
   simulator:
     build:
       context: openfoam/simulator

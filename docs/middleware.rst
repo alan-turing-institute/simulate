@@ -64,8 +64,8 @@ An example configuration is:
 .. code-block:: json
 
     {
-        "SQLALCHEMY_DATABASE_URI": "postgres://sg:sg@postgres/sg",
-        "JOB_MANAGER_URL": "http://manager:5001/job",
+        "SQLALCHEMY_DATABASE_URI": "postgres://sg:sg@middleware_database/sg",
+        "JOB_MANAGER_URL": "http://manager:5010/job",
         "AUTHENTICATION_URL": "http://auth:5050/auth/status",
         "AUTHENTICATE_ROUTES": true
     }
