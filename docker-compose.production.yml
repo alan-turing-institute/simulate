@@ -9,6 +9,7 @@ services:
       - "80:80"
       - "5000:5000"
       - "5010:5010"
+      - "5050:5050"
     depends_on:
       - frontend
       - middleware
@@ -39,7 +40,7 @@ services:
       context: auth
       dockerfile: Dockerfile
     ports:
-      - "5050:5050"
+      - "5051:5051"
     volumes:
       - ./auth:/app
     depends_on:
@@ -48,7 +49,7 @@ services:
       - FLASK_CONFIGURATION=production
     networks:
       - share
-    command: gunicorn -w 1 -b :5001 app:app
+    command: gunicorn -w 1 -b :5051 app:app
   auth_database:
     image: "postgres:latest"
     volumes:
@@ -73,11 +74,12 @@ services:
     depends_on:
       - middleware_database
     environment:
-      - FLASK_CONFIGURATION=production
+      - FLASK_CONFIGURATION=development
     networks:
     - share
     # add gunicorn to handle internal flask threading
     command: gunicorn -w 1 -b :5001 app:app
+  
   middleware_database:
     image: "postgres:latest"
     volumes:
