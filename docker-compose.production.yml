@@ -1,22 +1,38 @@
 version: '3'
 services:
 
+  # api gateway
+  nginx:
+    build: ./nginx
+    restart: always
+    ports: 
+      - "80:80"
+      - "5000:5000"
+      - "5010:5010"
+      - "5050:5050"
+    depends_on:
+      - frontend
+      - middleware
+      - manager
+    networks:
+      - share
+  
   # frontend components
   frontend:
     build:
       context: frontend
-      dockerfile: Dockerfile.development
-    ports:
-    - "8080:8080"
+      dockerfile: Dockerfile
+    expose:
+      - "80"
     depends_on:
-    - manager
-    - middleware
-    - simulator
+      - manager
+      - middleware
+      - simulator
     networks:
-    - share
+      - share
     volumes:
-    - './frontend/src:/app/src'
-    - '/app/node_modules'
+      - './frontend/src:/app/src'
+      - '/app/node_modules'
 
   # auth components
   auth:
@@ -24,48 +40,56 @@ services:
       context: auth
       dockerfile: Dockerfile
     ports:
-     - "5050:5050"
+      - "5051:5051"
     volumes:
       - ./auth:/app
     depends_on:
       - auth_database
+    environment:
+      - FLASK_CONFIGURATION=production
     networks:
       - share
+    command: gunicorn -w 1 -b :5051 app:app
   auth_database:
     image: "postgres:latest"
     volumes:
-     - auth_volume:/var/lib/postgresql/data
+      - auth_volume:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=sg
       - POSTGRES_PASSWORD=sg
       - POSTGRES_DB=sg
     networks:
-     - share
+      - share
 
-  # middleware components
+ # middleware components
   middleware:
     build:
       context: middleware
       dockerfile: Dockerfile
+    restart: always
     ports:
-     - "5000:5000"
+      - "5001:5001"
     volumes:
-     - ./middleware:/app
+      - ./middleware:/app
     depends_on:
-     - middleware_database
+      - middleware_database
+    environment:
+      - FLASK_CONFIGURATION=development
     networks:
-     - share
-     command: gunicorn -w 1 -b :5000 app:app --reload
+    - share
+    # add gunicorn to handle internal flask threading
+    command: gunicorn -w 1 -b :5001 app:app
+  
   middleware_database:
     image: "postgres:latest"
     volumes:
-     - middleware_volume:/var/lib/postgresql/data
+      - middleware_volume:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=sg
       - POSTGRES_PASSWORD=sg
       - POSTGRES_DB=sg
     networks:
-     - share
+      - share
 
   # openfoam components
   manager:
@@ -73,34 +97,34 @@ services:
       context: openfoam/manager
       dockerfile: Dockerfile
     ports:
-      - "5010:5010"
+      - "5011:5011"
       - "10023:22"
     volumes:
       - ./openfoam/manager:/app
     environment:
-      - FLASK_CONFIGURATION=development
+      - FLASK_CONFIGURATION=production
       - STORAGE_ACCOUNT_NAME
       - STORAGE_ACCOUNT_KEY
     depends_on:
-    - middleware
-    - simulator
+      - middleware
+      - simulator
     networks:
-    - share
-    command: gunicorn -w 1 -b :5010 app:app --reload
+      - share
+    command: gunicorn -w 1 -b :5011 app:app
   simulator:
     build:
       context: openfoam/simulator
       dockerfile: Dockerfile
     # here we use the keys from the manager
     env_file:
-    - openfoam/manager/keys/simulator.env
+      - openfoam/manager/keys/simulator.env
     ports:
-    - "10022:22"
+      - "10022:22"
     privileged: true
     volumes:
-    - ./openfoam/simulator:/app
+      - ./openfoam/simulator:/app
     networks:
-    - share
+      - share
 
 networks:
   share:

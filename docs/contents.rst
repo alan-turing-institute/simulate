@@ -1,3 +1,11 @@
+Development Chart
+-----------------
+
+.. toctree::
+   :maxdepth: 2
+
+   chart
+
 User's Guide
 ------------
 
@@ -14,6 +22,7 @@ Simulate consists of several components, which interact to provide different set
 .. toctree::
    :maxdepth: 2
 
+   gateway
    middleware
    manager
 
@@ -27,8 +36,8 @@ API Reference
    :maxdepth: 2
 
 
-Conribution Notes
------------------
+Contribution Notes
+------------------
 
 :TODO: Information for contributors is kept here.
 

@@ -4,13 +4,13 @@ Middleware
 The *middleware* acts as the bridge between the multi-purpose section
 of the Simulate system and user defined execution environments.
 It is responsible for managing jobs and cases, as well as all communication
-with the *job manager* through a well defined API.
+with the *manager* through a well defined API.
 
 It stores the definitions of different cases as well as all currently
 selected sets of parameter values. As part of this, it is the only service
 that the front end communicates with to manage jobs. This does mean that
 there are queries that are sent to the middleware that it does no processing
-for, and passes directly to the *job manager*. This aspect of the design
+for, and passes directly to the *manager*. This aspect of the design
 is intensional and serves to insulate the front end from any need to be
 aware of user defined components.
 
@@ -29,12 +29,12 @@ Authenticator:
     tokens that are passed with requests.
 
 Job Manager:
-    The *job manager* is responsible for actually running jobs once they
+    The *manager* is responsible for actually running jobs once they
     have been configured, and for notifying the *middleware* of changes
     to their status. Thus, the *middleware* will send specifications for
-    fully configured jobs to the *job manager*, which will then run them.
+    fully configured jobs to the *manager*, which will then run them.
     It will also update the *middleware* whenever there are changes to
-    the job state. The *job manager* must actively push updates the
+    the job state. The *manager* must actively push updates the
     *middleware*, as it will not query for changes.
 
 
@@ -46,7 +46,7 @@ The *middleware* can be run standalone as long as:
 #. It has a PostgreSQL instance to store data in
 #. You do not try to do anything
 #. You can do most tasks with an *authenticator*
-#. For everything else you need a *job manager*
+#. For everything else you need a *manager*
 
 Starting
 --------
@@ -64,8 +64,8 @@ An example configuration is:
 .. code-block:: json
 
     {
-        "SQLALCHEMY_DATABASE_URI": "postgres://sg:sg@postgres/sg",
-        "JOB_MANAGER_URL": "http://manager:5001/job",
+        "SQLALCHEMY_DATABASE_URI": "postgres://sg:sg@middleware_database/sg",
+        "JOB_MANAGER_URL": "http://manager:5010/job",
         "AUTHENTICATION_URL": "http://auth:5050/auth/status",
         "AUTHENTICATE_ROUTES": true
     }

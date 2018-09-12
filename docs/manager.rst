@@ -1,7 +1,7 @@
-Job Manager
-===========
+Manager
+=======
 
-The *job manager* is a service that sits between the *middleware* and the
+The *manager* is a service that sits between the *middleware* and the
 *backend*, and it is customized for a particular combination of simulator,
 compute infrastructure, and cloud storage infrastructure.
 
