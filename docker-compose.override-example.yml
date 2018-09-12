@@ -1,0 +1,14 @@
+version: '3'
+services:
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    ports:
+    - "80:80"
+    depends_on:
+    - manager
+    - middleware
+    - simulator
+    networks:
+    - db_nw

@@ -6,3 +6,6 @@
 _build
 _static
 _templates
+
+# production configuration 
+docker-compose.override.yml

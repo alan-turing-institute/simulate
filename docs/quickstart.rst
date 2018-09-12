@@ -72,7 +72,7 @@ Setting up Simulate
 Accessing Simulate
 ------------------
 
-The *front end* will now be available at ``http://localhost:8080``. You can now navigate to this URL in a web browser.
+The *frontend* will now be available at ``http://localhost:8080``. You can now navigate to this URL in a web browser.
 
 .. [#] Simulate uses Git submodules, hence the ``--recursive`` option must be included in the ``clone`` command.
 .. [#] Currently, we support MS Azure Storage Accounts. Hence, ``<key>`` is a secret key string obtainable through Storage Account "Access Keys" at `<portal.azure.com>`_.
@@ -81,4 +81,13 @@ The *front end* will now be available at ``http://localhost:8080``. You can now 
 
 
 
+Production builds
+-----------------
 
+#. Follow the above, but use the production configuration:
+
+    .. code-block:: shell
+
+    cp docker-compose.override-example.yml docker-compose.override.yml
+
+The *frontend* will now be available ``http://localhost:80``.

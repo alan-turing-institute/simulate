@@ -69,7 +69,6 @@ services:
 
 
   simulator:
-    # container_name: simulator
     build:
       context: openfoam/simulator
       dockerfile: Dockerfile
@@ -89,7 +88,7 @@ services:
   frontend:
     build:
       context: frontend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.development
     ports:
     - "8080:8080"
     depends_on:
