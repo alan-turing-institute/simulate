@@ -1,13 +1,28 @@
 version: '3'
 services:
 
+  # api gateway
+  nginx:
+    build: ./nginx
+    restart: always
+    ports: 
+    - "80:80"
+    - "5000:5000"
+    - "5010:5010"
+    depends_on:
+    - frontend
+    - middleware
+    - manager
+    networks:
+    - share
+  
   # frontend components
   frontend:
     build:
       context: frontend
       dockerfile: Dockerfile
-    ports:
-    - "80:80"
+    expose:
+    - "80"
     depends_on:
     - manager
     - middleware
@@ -43,15 +58,6 @@ services:
      - share
 
  # middleware components
-  middleware_nginx:
-    build: ./middleware/nginx
-    restart: always
-    ports: 
-    - 5000:80
-    depends_on:
-    - middleware
-    networks:
-    - share
   middleware:
     build:
       context: middleware
@@ -84,7 +90,7 @@ services:
       context: openfoam/manager
       dockerfile: Dockerfile
     ports:
-      - "5010:5010"
+      - "5011:5011"
       - "10023:22"
     volumes:
       - ./openfoam/manager:/app
@@ -97,6 +103,7 @@ services:
     - simulator
     networks:
     - share
+    command: gunicorn -w 1 -b :5011 app:app
   simulator:
     build:
       context: openfoam/simulator
