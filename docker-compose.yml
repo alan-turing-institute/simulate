@@ -55,7 +55,7 @@ services:
      - middleware_database
     networks:
      - share
-     command: gunicorn -w 1 -b :5000 app:app --reload
+    command: gunicorn -w 1 -b :5000 app:app --reload
   middleware_database:
     image: "postgres:latest"
     volumes:
