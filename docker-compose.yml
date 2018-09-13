@@ -1,22 +1,21 @@
 version: '3'
 services:
-
   # frontend components
   frontend:
     build:
       context: frontend
       dockerfile: Dockerfile.development
     ports:
-    - "8080:8080"
+      - '8080:8080'
     depends_on:
-    - manager
-    - middleware
-    - simulator
+      - manager
+      - middleware
+      - simulator
     networks:
-    - share
+      - share
     volumes:
-    - './frontend/src:/app/src'
-    - '/app/node_modules'
+      - './frontend/src:/app/src'
+      - '/app/node_modules'
 
   # auth components
   auth:
@@ -24,7 +23,7 @@ services:
       context: auth
       dockerfile: Dockerfile
     ports:
-     - "5050:5050"
+      - '5050:5050'
     volumes:
       - ./auth:/app
     depends_on:
@@ -32,15 +31,15 @@ services:
     networks:
       - share
   auth_database:
-    image: "postgres:latest"
+    image: 'postgres:latest'
     volumes:
-     - auth_volume:/var/lib/postgresql/data
+      - auth_volume:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=sg
       - POSTGRES_PASSWORD=sg
       - POSTGRES_DB=sg
     networks:
-     - share
+      - share
 
   # middleware components
   middleware:
@@ -48,24 +47,24 @@ services:
       context: middleware
       dockerfile: Dockerfile
     ports:
-     - "5000:5000"
+      - '5000:5000'
     volumes:
-     - ./middleware:/app
+      - ./middleware:/app
     depends_on:
-     - middleware_database
+      - middleware_database
     networks:
-     - share
-     command: gunicorn -w 1 -b :5000 app:app --reload
+      - share
+    # command: gunicorn -w 1 -b :5000 app:app --reload
   middleware_database:
-    image: "postgres:latest"
+    image: 'postgres:latest'
     volumes:
-     - middleware_volume:/var/lib/postgresql/data
+      - middleware_volume:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=sg
       - POSTGRES_PASSWORD=sg
       - POSTGRES_DB=sg
     networks:
-     - share
+      - share
 
   # openfoam components
   manager:
@@ -73,8 +72,8 @@ services:
       context: openfoam/manager
       dockerfile: Dockerfile
     ports:
-      - "5010:5010"
-      - "10023:22"
+      - '5010:5010'
+      - '10023:22'
     volumes:
       - ./openfoam/manager:/app
     environment:
@@ -82,10 +81,10 @@ services:
       - STORAGE_ACCOUNT_NAME
       - STORAGE_ACCOUNT_KEY
     depends_on:
-    - middleware
-    - simulator
+      - middleware
+      - simulator
     networks:
-    - share
+      - share
     command: gunicorn -w 1 -b :5010 app:app --reload
   simulator:
     build:
@@ -93,14 +92,14 @@ services:
       dockerfile: Dockerfile
     # here we use the keys from the manager
     env_file:
-    - openfoam/manager/keys/simulator.env
+      - openfoam/manager/keys/simulator.env
     ports:
-    - "10022:22"
+      - '10022:22'
     privileged: true
     volumes:
-    - ./openfoam/simulator:/app
+      - ./openfoam/simulator:/app
     networks:
-    - share
+      - share
 
 networks:
   share:
