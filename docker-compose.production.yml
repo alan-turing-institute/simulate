@@ -10,10 +10,6 @@ services:
       - "5000:5000"
       - "5010:5010"
       - "5050:5050"
-    depends_on:
-      - frontend
-      - middleware
-      - manager
     networks:
       - share
   
@@ -28,6 +24,7 @@ services:
       - manager
       - middleware
       - simulator
+      - nginx
     networks:
       - share
     volumes:
@@ -39,12 +36,13 @@ services:
     build:
       context: auth
       dockerfile: Dockerfile
-    ports:
-      - "5051:5051"
+    expose:
+      - "5051"
     volumes:
       - ./auth:/app
     depends_on:
       - auth_database
+      - nginx
     environment:
       - FLASK_CONFIGURATION=production
     networks:
@@ -67,16 +65,17 @@ services:
       context: middleware
       dockerfile: Dockerfile
     restart: always
-    ports:
-      - "5001:5001"
+    expose:
+      - "5001"
     volumes:
       - ./middleware:/app
     depends_on:
       - middleware_database
+      - nginx
     environment:
-      - FLASK_CONFIGURATION=development
+      - FLASK_CONFIGURATION=production
     networks:
-    - share
+      - share
     # add gunicorn to handle internal flask threading
     command: gunicorn -w 1 -b :5001 app:app
   
@@ -97,8 +96,9 @@ services:
       context: openfoam/manager
       dockerfile: Dockerfile
     ports:
-      - "5011:5011"
       - "10023:22"
+    expose:
+      - "5011"
     volumes:
       - ./openfoam/manager:/app
     environment:
@@ -108,6 +108,7 @@ services:
     depends_on:
       - middleware
       - simulator
+      - nginx
     networks:
       - share
     command: gunicorn -w 1 -b :5011 app:app
