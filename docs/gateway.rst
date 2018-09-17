@@ -20,7 +20,7 @@ Simulate uses `nginx <https://www.nginx.com/>`_ as an API gateway. This way requ
             listen 5000;
             server_name middleware;
             location / {
-                proxy_pass http://middleware:5001;
+                proxy_pass http://middleware:5000;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -31,7 +31,7 @@ Simulate uses `nginx <https://www.nginx.com/>`_ as an API gateway. This way requ
             listen 5010;
             server_name manager;
             location / {
-                proxy_pass http://manager:5011;
+                proxy_pass http://manager:5010;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -52,5 +52,5 @@ For example, with the above configuration it is possible to access the *frontend
         G ->> F: GET frontend:80
         F ->> C: content
         C ->> G: GET host:5000/job
-        G ->> M: GET middleware:5001/job
+        G ->> M: GET middleware:5000/job
         M ->> C: content
