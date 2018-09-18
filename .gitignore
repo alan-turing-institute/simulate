@@ -6,3 +6,6 @@
 _build
 _static
 _templates
+
+# configuration content
+nginx/project.conf
