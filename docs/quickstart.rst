@@ -78,11 +78,18 @@ Production mode
 
     .. code-block:: shell
 
+        cp nginx/project.example.conf nginx/project.conf
         cp auth/config.example.json auth/config.production.json
         cp middleware/config.example.json middleware/config.production.json
         cp openfoam/manager/config.example.json openfoam/manager/config.production.json
         cd openfoam/manager/keys && ./create_keys.sh && cd -
         docker-compose --file docker-compose.production.json up --build
+
+#. Generate SSL certificates via `letsencrypt <https://certbot.eff.org/>`_:
+
+    .. code-block:: shell
+
+        sudo certbot certonly --standalone -d simulate.uksouth.cloudapp.azure.com
 
 The *frontend* will now be available ``http://localhost:80``.
 
