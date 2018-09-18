@@ -12,6 +12,11 @@ services:
       - "5050:5050"
     networks:
       - share
+    depends_on:
+      - frontend
+      - auth
+      - middleware
+      - manager
   
   # frontend components
   frontend:
@@ -24,7 +29,6 @@ services:
       - manager
       - middleware
       - simulator
-      - nginx
     networks:
       - share
     volumes:
@@ -42,7 +46,6 @@ services:
       - ./auth:/app
     depends_on:
       - auth_database
-      - nginx
     environment:
       - FLASK_CONFIGURATION=production
     networks:
@@ -71,7 +74,6 @@ services:
       - ./middleware:/app
     depends_on:
       - middleware_database
-      - nginx
     environment:
       - FLASK_CONFIGURATION=production
     networks:
@@ -108,7 +110,6 @@ services:
     depends_on:
       - middleware
       - simulator
-      - nginx
     networks:
       - share
     command: gunicorn -w 3 -b :5010 app:app
