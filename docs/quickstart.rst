@@ -94,6 +94,7 @@ Production mode
 The *frontend* will now be available ``http://localhost:80``.
 
 
+
 .. [#] Simulate uses Git submodules, hence the ``--recursive`` option must be included in the ``clone`` command.
 .. [#] Currently, we support MS Azure Storage Accounts. Hence, ``<key>`` is a secret key string obtainable through Storage Account "Access Keys" at `<portal.azure.com>`_.
 .. [#] Docker images can take several minutes to build if this is the first time you are building them.
