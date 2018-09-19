@@ -4,7 +4,7 @@ services:
   frontend:
     build:
       context: frontend
-      dockerfile: Dockerfile.development
+      dockerfile: Dockerfile.dev
     ports:
       - '8080:8080'
     depends_on:
@@ -77,7 +77,7 @@ services:
     volumes:
       - ./manager:/app
     environment:
-      - FLASK_CONFIGURATION=development
+      - FLASK_CONFIGURATION=dev
       - STORAGE_ACCOUNT_NAME
       - STORAGE_ACCOUNT_KEY
     depends_on:
