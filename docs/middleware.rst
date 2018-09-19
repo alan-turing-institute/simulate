@@ -57,7 +57,7 @@ Set up
 In order to run the *middleware* your system settings must be
 correctly configured in ``config.<mode>.json``.
 The mode is set through the ``FLASK_CONFIGURATION`` environmental
-variable, defaulting to ``development``.
+variable, defaulting to ``dev``.
 
 An example configuration is:
 
@@ -90,7 +90,7 @@ You must then run the following commands:
 .. code-block:: bash
 
     pip install -r requirements.txt
-    FLASK_CONFIGURATION=development python app.py
+    FLASK_CONFIGURATION=dev python app.py
 
 Note that if you need to run the system in production mode you
 will need to make the appropriate changes as described in the

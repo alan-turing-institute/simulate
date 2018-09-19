@@ -14,8 +14,8 @@ matrix:
 
 before_install:
         #  - git submodule update --init --recursive
-        #  - cp openfoam/manager/config.example.json openfoam/manager/config.development.json
-        #  - (cd openfoam/manager/keys && ./create_keys.sh)
+        #  - cp manager/config.example.json manager/config.dev.json
+        #  - (cd manager/keys && ./create_keys.sh)
 
 install:
         #  - docker-compose build

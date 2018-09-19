@@ -28,20 +28,20 @@ Development mode
 
     .. code-block:: shell
 
-        cp auth/config.example.json auth/config.development.json
+        cp auth/config.example.json auth/config.dev.json
 
 #. Create the *middleware* configuration file:
 
     .. code-block:: shell
 
-        cp middleware/config.example.json middleware/config.development.json
+        cp middleware/config.example.json middleware/config.dev.json
 
 #. Create the *manager* SSH keys and configuration file:
 
     .. code-block:: shell
 
-        cp openfoam/manager/config.example.json openfoam/manager/config.development.json
-        cd openfoam/manager/keys && ./create_keys.sh && cd -
+        cp manager/config.example.json manager/config.dev.json
+        cd manager/keys && ./create_keys.sh && cd -
 
 #. Add the *storage* configuration using environment variables: [#]_
 
@@ -80,9 +80,9 @@ Production mode
 
         cp nginx/project.example-ssl.conf nginx/project.conf
         cp frontend/src/environments/environment.prod.example-ssl.ts frontend/src/environments/environment.prod.ts
-        cp auth/config.example.json auth/config.production.json
-        cp middleware/config.example.json middleware/config.production.json
-        cp manager/config.example.json manager/config.production.json
+        cp auth/config.example.json auth/config.prod.json
+        cp middleware/config.example.json middleware/config.prod.json
+        cp manager/config.example.json manager/config.prod.json
         cd manager/keys && ./create_keys.sh && cd -
         export STORAGE_ACCOUNT_NAME=simulate
         export STORAGE_ACCOUNT_KEY=<key>
