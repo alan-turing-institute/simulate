@@ -96,14 +96,14 @@ services:
   # openfoam components
   manager:
     build:
-      context: openfoam/manager
+      context: manager
       dockerfile: Dockerfile
     ports:
       - "10023:22"
     expose:
       - "5010"
     volumes:
-      - ./openfoam/manager:/app
+      - ./manager:/app
     environment:
       - FLASK_CONFIGURATION=production
       - STORAGE_ACCOUNT_NAME
@@ -116,16 +116,16 @@ services:
     command: gunicorn -w 3 -b :5010 app:app
   simulator:
     build:
-      context: openfoam/simulator
+      context: simulator
       dockerfile: Dockerfile
     # here we use the keys from the manager
     env_file:
-      - openfoam/manager/keys/simulator.env
+      - manager/keys/simulator.env
     ports:
       - "10022:22"
     privileged: true
     volumes:
-      - ./openfoam/simulator:/app
+      - ./simulator:/app
     networks:
       - share
 
