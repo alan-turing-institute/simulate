@@ -1,5 +1,9 @@
 # Simulate
 
+[![Documentation Status](https://readthedocs.org/projects/simulate/badge/?version=latest)](https://simulate.readthedocs.io/en/latest/?badge=latest)
+
+
+
 A user-friendly web-based interface for managing simulations on HPC and cloud resources.
 
 This repository is for managing project-level issues. See separate repositories below for code and component-level issues.
