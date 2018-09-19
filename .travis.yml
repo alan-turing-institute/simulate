@@ -13,12 +13,15 @@ matrix:
     - python: 3.6
 
 before_install:
-        #  - git submodule update --init --recursive
-        #  - cp manager/config.example.json manager/config.dev.json
-        #  - (cd manager/keys && ./create_keys.sh)
+  - git submodule update --init --recursive
+  - cp auth/config.example.json auth/config.dev.json
+  - cp middleware/config.example.json middleware/config.dev.json
+  - cp manager/config.example.json manager/config.dev.json
+  - (cd manager/keys && ./create_keys.sh)
 
 install:
-        #  - docker-compose build
+  # - docker-compose build
 
 script: 
+  # - ./integration_tests.sh
   - echo "success"

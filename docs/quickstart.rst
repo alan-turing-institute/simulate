@@ -17,12 +17,6 @@ Development mode
         git clone --recursive https://github.com/alan-turing-institute/simulate.git
         cd simulate
 
-#. Create the *frontend* configuration file:
-
-    .. code-block:: shell
-
-        cp frontend/src/environments/environment.example.ts frontend/src/environments/environment.prod.ts
-
 
 #. Create the *auth* configuration file:
 
