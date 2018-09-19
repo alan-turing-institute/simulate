@@ -84,6 +84,8 @@ Production mode
         cp middleware/config.example.json middleware/config.production.json
         cp manager/config.example.json manager/config.production.json
         cd manager/keys && ./create_keys.sh && cd -
+        export STORAGE_ACCOUNT_NAME=simulate
+        export STORAGE_ACCOUNT_KEY=<key>
         docker-compose --file docker-compose.production.json up --build
 
 #. Generate SSL certificates via `letsencrypt <https://certbot.eff.org/>`_:
