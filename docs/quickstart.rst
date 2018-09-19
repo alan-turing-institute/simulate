@@ -78,11 +78,12 @@ Production mode
 
     .. code-block:: shell
 
-        cp nginx/project.example.conf nginx/project.conf
+        cp nginx/project.example-ssl.conf nginx/project.conf
+        cp frontend/src/environments/environment.prod.example-ssl.ts frontend/src/environments/environment.prod.ts
         cp auth/config.example.json auth/config.production.json
         cp middleware/config.example.json middleware/config.production.json
-        cp openfoam/manager/config.example.json openfoam/manager/config.production.json
-        cd openfoam/manager/keys && ./create_keys.sh && cd -
+        cp manager/config.example.json manager/config.production.json
+        cd manager/keys && ./create_keys.sh && cd -
         docker-compose --file docker-compose.production.json up --build
 
 #. Generate SSL certificates via `letsencrypt <https://certbot.eff.org/>`_:
