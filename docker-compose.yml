@@ -54,7 +54,7 @@ services:
       - middleware_database
     networks:
       - share
-    # command: gunicorn -w 1 -b :5000 app:app --reload
+    command: gunicorn -w 3 -b :5000 app:app --reload
   middleware_database:
     image: 'postgres:latest'
     volumes:
@@ -85,7 +85,7 @@ services:
       - simulator
     networks:
       - share
-    command: gunicorn -w 1 -b :5010 app:app --reload
+    command: gunicorn -w 3 -b :5010 app:app --reload
   simulator:
     build:
       context: simulator
