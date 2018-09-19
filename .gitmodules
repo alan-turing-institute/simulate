@@ -4,9 +4,12 @@
 [submodule "middleware"]
 	path = middleware
 	url = https://github.com/alan-turing-institute/gateway-middleware
-[submodule "openfoam"]
-	path = openfoam
-	url = https://github.com/alan-turing-institute/gateway-openfoam.git
 [submodule "auth"]
 	path = auth
 	url = https://github.com/alan-turing-institute/gateway-auth.git
+[submodule "manager"]
+	path = manager
+	url = https://github.com/alan-turing-institute/simulate-manager.git
+[submodule "simulator"]
+	path = simulator
+	url = https://github.com/alan-turing-institute/simulate-simulator.git
