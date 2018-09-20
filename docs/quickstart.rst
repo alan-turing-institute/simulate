@@ -80,7 +80,7 @@ Production mode
         cd manager/keys && ./create_keys.sh && cd -
         export STORAGE_ACCOUNT_NAME=simulate
         export STORAGE_ACCOUNT_KEY=<key>
-        docker-compose --file docker-compose.production.json up --build
+        docker-compose --file docker-compose.prod.json up --build
 
 #. Generate SSL certificates via `letsencrypt <https://certbot.eff.org/>`_:
 
