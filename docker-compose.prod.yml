@@ -76,7 +76,7 @@ services:
     depends_on:
       - middleware_database
     environment:
-      - FLASK_CONFIGURATION=production
+      - FLASK_CONFIGURATION=prod
     networks:
       - share
     # add gunicorn to handle internal flask threading
