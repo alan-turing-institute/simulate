@@ -98,6 +98,8 @@ services:
     privileged: true
     volumes:
       - ./simulator:/app
+      - ./middleware/tests/resources/damBreak:/tmp/damBreak
+      - ./middleware/tests/resources/cavity:/tmp/cavity
     networks:
       - share
 
